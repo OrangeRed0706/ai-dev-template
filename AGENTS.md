@@ -2,7 +2,7 @@
 
 > 給 AI 讀的專案規範。每次 session 開始先讀這個。
 
-## Build & Test
+## Build & Test (Local CI)
 
 ```bash
 # [根據你的專案修改]
@@ -12,9 +12,9 @@ pnpm test
 pnpm lint
 ```
 
-**規則：commit 前必須通過 `build && test && lint`**
+**規則：commit 前必須在本地通過 `build && test && lint`**
 
-如果失敗，自己修，不要問人。
+不要等遠端 CI，自己在本地跑。如果失敗，自己修，不要問人。
 
 ## 程式碼風格
 
