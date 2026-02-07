@@ -1,0 +1,28 @@
+#!/bin/sh
+# git-hooks/pre-commit
+# 
+# Commit 前自動跑 lint 和 format 檢查
+# 
+# 安裝：
+#   ln -sf ../../git-hooks/pre-commit .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+
+# 取得要 commit 的檔案
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+[ -z "$FILES" ] && exit 0
+
+echo "Running pre-commit checks..."
+
+# [根據你的專案取消註解對應的檢查]
+
+# Node.js
+# pnpm lint-staged || exit 1
+
+# .NET
+# dotnet format --verify-no-changes || exit 1
+
+# Python
+# black --check . || exit 1
+
+echo "Pre-commit checks passed!"
+exit 0

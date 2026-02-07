@@ -8,6 +8,29 @@
 
 ---
 
+## 目錄結構
+
+```
+AGENTS.md                    # 專案規範（必須）
+CLAUDE.md                    # → symlink to AGENTS.md
+.pi/prompts/                 # 可呼叫的 AI 指令
+  reviewpr.md                # /reviewpr - 審查 PR
+  landpr.md                  # /landpr - 合併 PR
+  issue.md                   # /issue - 分析 issue
+  changelog.md               # /changelog - 審計 changelog
+scripts/
+  committer                  # Scoped commit 腳本
+git-hooks/
+  pre-commit                 # Pre-commit hook
+.github/workflows/
+  ci.yml                     # CI workflow 範本
+docs/design/
+  TEMPLATE.md                # 設計文件範本
+  example-auth.md            # 範例
+```
+
+---
+
 ## 核心 Workflow
 
 ### 1. AGENTS.md — 讓 AI 知道規則
@@ -25,9 +48,45 @@
 - **Decisions (locked)** — 已決定的事（AI 不會改）
 - **Key concepts** — 專有名詞定義
 
-### 3. Close the Loop — AI 自己驗證
+### 3. Close the Loop — AI 自己驗證 (Local CI)
 
 AI 必須能跑 `build → test → lint`，失敗自己修。
+
+不等遠端 CI，本地跑。
+
+---
+
+## Prompt 指令
+
+`.pi/prompts/` 裡的指令讓 AI 執行標準化流程：
+
+| 指令 | 用途 |
+|------|------|
+| `/reviewpr <PR>` | 審查 PR（不合併） |
+| `/landpr <PR>` | 完整 PR 合併流程 |
+| `/issue <issue>` | 分析 GitHub issue |
+| `/changelog` | 審計 changelog entries |
+
+---
+
+## 工具
+
+### scripts/committer
+
+Scoped commit — 只 commit 指定的檔案：
+
+```bash
+./scripts/committer "feat: add login" src/login.ts src/auth.ts
+```
+
+多 agent 協作時避免意外 commit 其他人的改動。
+
+### git-hooks/pre-commit
+
+安裝：
+```bash
+ln -sf ../../git-hooks/pre-commit .git/hooks/pre-commit
+```
 
 ---
 
@@ -40,8 +99,6 @@ Peter 花最多時間在規劃：
 3. 一起建立計畫
 4. 挑戰、質疑、調整
 5. 滿意後說 "build"
-
-> "Plan mode feels like a hack that was necessary for older generations of models."
 
 ---
 
@@ -63,19 +120,11 @@ PR 變成 "Prompt Request" — 關心的是產生程式碼的 prompt，不是程
 
 ## 使用方式
 
-1. 複製 `AGENTS.md` 到你的專案
-2. 修改 build 指令和規則
-3. 功能開發前先寫 design doc
-4. 讓 AI 去做
-
-## 檔案
-
-```
-AGENTS.md              # 專案規範（必須）
-docs/design/
-  TEMPLATE.md          # 設計文件範本
-  example-auth.md      # 範例
-```
+1. 複製這個 template 到你的專案
+2. 修改 `AGENTS.md` 的 build 指令
+3. 修改 `.github/workflows/ci.yml`
+4. 功能開發前先寫 design doc
+5. 讓 AI 去做
 
 ---
 

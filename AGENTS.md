@@ -16,6 +16,16 @@ pnpm lint
 
 不要等遠端 CI，自己在本地跑。如果失敗，自己修，不要問人。
 
+## Commit
+
+用 `scripts/committer` 做 scoped commit：
+
+```bash
+./scripts/committer "feat: add login" src/login.ts src/auth.ts
+```
+
+這樣只會 commit 指定的檔案，避免意外 commit 其他改動。
+
 ## 程式碼風格
 
 - 用專案既有的 pattern，不要發明新的
@@ -29,6 +39,15 @@ pnpm lint
 - 不要切換 branch（除非明確要求）
 - 不要改其他 agent 的檔案
 - 不要問不必要的問題，先試著解決
+
+## Prompt 指令
+
+這些指令定義在 `.pi/prompts/`：
+
+- `/reviewpr <PR>` — 審查 PR（不合併）
+- `/landpr <PR>` — 完整 PR 合併流程
+- `/issue <issue>` — 分析 GitHub issue
+- `/changelog` — 審計 changelog entries
 
 ## 設計文件
 

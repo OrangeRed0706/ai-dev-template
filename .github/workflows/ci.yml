@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # [根據你的專案選擇對應的設定]
+
+      # Node.js
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 22.x
+      #
+      # - name: Setup pnpm
+      #   uses: pnpm/action-setup@v4
+      #   with:
+      #     version: 10
+      #
+      # - name: Install dependencies
+      #   run: pnpm install --frozen-lockfile
+      #
+      # - name: Lint
+      #   run: pnpm lint
+      #
+      # - name: Build
+      #   run: pnpm build
+      #
+      # - name: Test
+      #   run: pnpm test
+
+      # .NET
+      # - name: Setup .NET
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: 8.0.x
+      #
+      # - name: Restore
+      #   run: dotnet restore
+      #
+      # - name: Build
+      #   run: dotnet build --no-restore
+      #
+      # - name: Test
+      #   run: dotnet test --no-build --verbosity normal
+      #
+      # - name: Format check
+      #   run: dotnet format --verify-no-changes
+
+      # Python
+      # - name: Setup Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.12'
+      #
+      # - name: Install dependencies
+      #   run: pip install -r requirements.txt
+      #
+      # - name: Lint
+      #   run: ruff check .
+      #
+      # - name: Test
+      #   run: pytest
