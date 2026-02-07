@@ -43,7 +43,21 @@ Peter 花最多時間在規劃：
 
 > "Plan mode feels like a hack that was necessary for older generations of models."
 
-現在的模型可以直接對話規劃。
+---
+
+## Under-prompting
+
+Peter 有時故意給模糊的 prompt，讓 AI 探索他沒想到的方向。
+
+不用每次都寫得很詳細，有時候讓 AI 自己發揮會有意外收穫。
+
+---
+
+## 架構討論 > Code Review
+
+Peter 跟團隊討論時，**只談架構和重大決策，不談程式碼細節**。
+
+PR 變成 "Prompt Request" — 關心的是產生程式碼的 prompt，不是程式碼本身。
 
 ---
 
@@ -72,6 +86,8 @@ docs/design/
 3. **多 agent 並行** — 不同功能同時開發
 4. **Local CI** — 不等遠端，agent 本地跑測試
 5. **直接 commit main** — 不喜歡就讓 AI 改
+6. **Under-prompt** — 有時給模糊 prompt 讓 AI 探索
+7. **架構討論 > Code Review** — 只談設計不談細節
 
 ---
 
