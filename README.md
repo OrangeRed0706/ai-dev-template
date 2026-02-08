@@ -8,6 +8,57 @@
 
 ---
 
+## 核心概念：兩個 Loop
+
+### 1. AI 的閉環（技術層）
+
+```
+AI 寫 code → AI 跑 build/test → 失敗 → AI 自己修 → 再跑 → 通過
+```
+
+讓 AI **自己驗證自己的工作**，不用你盯著看它編譯。
+
+### 2. 人在 Loop 裡（決策層）
+
+```
+你提需求 → AI 提方案 → 你看/調整 → AI build → 你驗收
+```
+
+讓**你掌控方向**，不是讓 AI 自己決定做什麼。
+
+### 合在一起
+
+```
+你：我想做 X
+AI：我打算這樣做...
+你：好，build
+     ↓
+   [AI 的閉環]
+   AI 寫 code → 跑 test → 失敗 → 自己修 → 通過
+     ↓
+AI：做好了，測試通過
+你：讓我看看... 不對，這裡改一下
+AI：好，改了
+你：OK，push
+```
+
+---
+
+## 不需要的
+
+- ❌ 複雜的 orchestration（如 Gastown 的 "slop town"）
+- ❌ 讓 AI 跑 24 小時不管（Ralph loop = slop）
+- ❌ 很多工具/框架
+- ❌ 完美的 prompt
+
+## 需要的
+
+- ✅ 你的腦子（想清楚要做什麼）
+- ✅ 跟 AI 對話（"let's discuss"）
+- ✅ 能跑測試驗證結果
+
+---
+
 ## 目錄結構
 
 ```
@@ -56,6 +107,67 @@ AI 必須能跑 `build → test → lint`，失敗自己修。
 
 ---
 
+## Planning First
+
+Peter 花最多時間在規劃：
+
+1. 提出問題/功能需求
+2. 讓 AI 探索程式碼
+3. 一起建立計畫（"let's discuss, give me options"）
+4. 挑戰、質疑、調整
+5. 滿意後說 "build"
+
+> "Plan mode was a hack that Anthropic had to add because the model is so trigger friendly."  
+> 新模型直接對話就好，不需要特別的 plan mode。
+
+---
+
+## PR = Prompt Request
+
+Peter 把 PR 當作「意圖」：
+
+- 不在乎程式碼品質
+- 只看 PR 想達成什麼
+- 自己用 AI 重建或 base on 別人的 PR
+
+> "I see pull requests more often as a prompt request."
+
+---
+
+## 多 Agent 並行
+
+Peter 同時跑多個 agent：
+
+- 不用 worktree，直接 clone 多份 repo（project-1, project-2, project-3...）
+- 像玩 RTS 遊戲一樣管理
+- 做完就 push to main
+
+> "If you only work on one, it's very hard to get into the zone because it's just too slow."
+
+---
+
+## 不要掉進 Agentic Trap
+
+Peter 警告：
+
+- 不要花太多時間做「讓 AI 更好的工具」
+- 不要用複雜的 orchestration（MCP 等）
+- 不要讓 AI 無人監督跑太久
+
+> "You're not actually building something that really brings you forward. You just have this... you're just building tools."
+
+---
+
+## 怎麼學
+
+- 要玩、要犯錯
+- 不能只花一天評估就說 AI 不行
+- 要理解 AI 怎麼思考
+
+> "You need to play to understand how those little monsters work."
+
+---
+
 ## Prompt 指令
 
 `.pi/prompts/` 裡的指令讓 AI 執行標準化流程：
@@ -90,34 +202,6 @@ ln -sf ../../git-hooks/pre-commit .git/hooks/pre-commit
 
 ---
 
-## Planning First
-
-Peter 花最多時間在規劃：
-
-1. 提出問題/功能需求
-2. 讓 AI 探索程式碼
-3. 一起建立計畫
-4. 挑戰、質疑、調整
-5. 滿意後說 "build"
-
----
-
-## Under-prompting
-
-Peter 有時故意給模糊的 prompt，讓 AI 探索他沒想到的方向。
-
-不用每次都寫得很詳細，有時候讓 AI 自己發揮會有意外收穫。
-
----
-
-## 架構討論 > Code Review
-
-Peter 跟團隊討論時，**只談架構和重大決策，不談程式碼細節**。
-
-PR 變成 "Prompt Request" — 關心的是產生程式碼的 prompt，不是程式碼本身。
-
----
-
 ## 使用方式
 
 1. 複製這個 template 到你的專案
@@ -128,20 +212,9 @@ PR 變成 "Prompt Request" — 關心的是產生程式碼的 prompt，不是程
 
 ---
 
-## Peter 的原則
-
-1. **Planning first** — 花時間規劃，滿意後才 build
-2. **不看 code** — 只關心架構
-3. **多 agent 並行** — 不同功能同時開發
-4. **Local CI** — 不等遠端，agent 本地跑測試
-5. **直接 commit main** — 不喜歡就讓 AI 改
-6. **Under-prompt** — 有時給模糊 prompt 讓 AI 探索
-7. **架構討論 > Code Review** — 只談設計不談細節
-
----
-
 ## 參考
 
 - [The Pragmatic Engineer: The creator of Clawd](https://newsletter.pragmaticengineer.com/p/the-creator-of-clawd-i-ship-code)
 - [Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed)
+- [YouTube: How OpenClaw's Creator Uses AI](https://www.youtube.com/watch?v=AcwK1Uuwc0U)
 - [OpenClaw GitHub](https://github.com/openclaw/openclaw)
